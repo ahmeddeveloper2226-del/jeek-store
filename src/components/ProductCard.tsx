@@ -1,6 +1,8 @@
+// jeek-store/src/components/ProductCard.tsx
 import { asset } from '../lib/asset';
 import { useState } from 'react';
 import { Bike, Check, GitCompare, Heart, ShoppingBag, Star } from 'lucide-react';
+import { useDeviceMode } from '../lib/deviceMode';
 import { useStore } from '../context/StoreContext';
 import { formatCurrency } from '../data/catalog';
 import { Product } from '../types';
@@ -10,7 +12,9 @@ interface ProductCardProps {
   featured?: boolean;
 }
 
-export function ProductCard({ product, featured = false }: ProductCardProps) {
+export function ProductCard({ product, featured: featuredProp = false }: ProductCardProps) {
+  const phone = useDeviceMode() === 'phone';
+  const featured = featuredProp && !phone;
   const {
     language,
     t,
@@ -79,14 +83,14 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
         )}
 
         {/* Quick Actions */}
-        <div className="absolute top-3.5 inset-x-3.5 flex items-center justify-between pointer-events-none">
+        <div className={`absolute ${phone ? 'top-1.5 inset-x-1.5' : 'top-3.5 inset-x-3.5'} flex items-center justify-between pointer-events-none`}>
           {product.category === 'bikes' ? (
             <button
               type="button"
               onClick={handleCompare}
               title={t('pdpCompareAction')}
               aria-label={t('pdpCompareAction')}
-              className="pointer-events-auto w-9 h-9 rounded-lg bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xs border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-200 hover:border-red-600 hover:text-red-600 transition-colors cursor-pointer"
+              className={`pointer-events-auto ${phone ? 'w-7 h-7' : 'w-9 h-9'} rounded-lg bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xs border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-200 hover:border-red-600 hover:text-red-600 transition-colors cursor-pointer`}
             >
               <GitCompare className="w-4 h-4" />
             </button>
@@ -98,7 +102,7 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
             type="button"
             onClick={handleFavorite}
             aria-label="Save bike"
-            className="pointer-events-auto w-9 h-9 rounded-lg bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xs border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-200 hover:border-red-600 hover:text-red-600 transition-colors cursor-pointer"
+            className={`pointer-events-auto ${phone ? 'w-7 h-7' : 'w-9 h-9'} rounded-lg bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xs border border-zinc-200/80 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-200 hover:border-red-600 hover:text-red-600 transition-colors cursor-pointer`}
           >
             <Heart className={`w-4 h-4 ${isFav ? 'fill-red-600 text-red-600' : ''}`} />
           </button>
@@ -107,11 +111,11 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
 
       {/* Card Body */}
       <div
-        className={`p-5 flex-1 flex flex-col justify-between gap-4 ${
+        className={`${phone ? 'p-2.5' : 'p-5'} flex-1 flex flex-col justify-between ${phone ? 'gap-2' : 'gap-4'} ${
           featured ? 'lg:p-8' : ''
         }`}
       >
-        <div className="space-y-3.5">
+        <div className={phone ? 'space-y-2' : 'space-y-3.5'}>
           {/* Available Colors Directly Under Image */}
           <div className="flex items-center justify-between gap-2">
             <div
@@ -133,7 +137,7 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
                   style={{ backgroundColor: c.hex }}
                 />
               ))}
-              <span className="text-[11px] text-zinc-500 dark:text-zinc-400 ms-1.5 truncate max-w-[115px]">
+              <span className={`${phone ? 'hidden' : ''} text-[11px] text-zinc-500 dark:text-zinc-400 ms-1.5 truncate max-w-[115px]`}>
                 {language === 'ar' ? selectedColor.nameAr : selectedColor.name}
               </span>
             </div>
@@ -155,7 +159,7 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
             </p>
             <h3
               className={`font-display font-bold tracking-tight text-zinc-950 dark:text-white leading-snug group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors ${
-                featured ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'
+                featured ? 'text-2xl sm:text-3xl' : phone ? 'text-sm' : 'text-lg sm:text-xl'
               }`}
             >
               {language === 'ar' ? product.nameAr : product.name}
@@ -170,7 +174,7 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
 
           {/* Element & Interactive Size Selector */}
           <div className="space-y-2.5 text-xs">
-            <div className="flex items-center justify-between gap-2 py-2 border-y border-zinc-100 dark:border-zinc-800/80">
+            <div className={`${phone ? 'hidden' : 'flex'} items-center justify-between gap-2 py-2 border-y border-zinc-100 dark:border-zinc-800/80`}>
               <span className="text-zinc-500 dark:text-zinc-400">{t('elementLabel')}</span>
               <span className="font-semibold text-zinc-950 dark:text-zinc-100 text-end">
                 {language === 'ar' ? product.elementAr : product.element}
@@ -205,15 +209,15 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
         </div>
 
         {/* Price + Add to Cart CTA */}
-        <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-3">
-          <span className="font-mono-tabular text-xl font-bold text-zinc-950 dark:text-white">
+        <div className={`pt-2 border-t border-zinc-100 dark:border-zinc-800 flex ${phone ? 'flex-col items-stretch gap-2' : 'items-center justify-between gap-3'}`}>
+          <span className={`font-mono-tabular ${phone ? "text-base" : "text-xl"} font-bold text-zinc-950 dark:text-white`}>
             {formatCurrency(product.price, language)}
           </span>
 
           <button
             type="button"
             onClick={handleAdd}
-            className={`inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`inline-flex items-center justify-center gap-1.5 ${phone ? 'px-2 py-2' : 'px-4 py-2.5'} rounded-lg text-xs font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
               justAdded
                 ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950'
                 : 'bg-red-600 hover:bg-red-700 text-white shadow-xs'

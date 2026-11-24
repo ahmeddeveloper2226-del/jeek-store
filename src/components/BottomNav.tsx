@@ -1,3 +1,4 @@
+// jeek-store/src/components/BottomNav.tsx
 import { asset } from '../lib/asset';
 import type { ComponentType } from 'react';
 import { ArrowLeftRight, Bike, Home, LayoutGrid, Package, User, Wrench } from 'lucide-react';
@@ -33,7 +34,7 @@ export function BottomNav() {
   return (
     <>
       {/* Quiet Store Footer Stamp */}
-      <footer className="w-full border-t border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-200 mt-20 pb-24 sm:pb-28">
+      <footer className="w-full border-t border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-200 mt-20 pb-32 sm:pb-36">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
           <div className="flex items-center gap-2.5">
             <img
@@ -53,7 +54,7 @@ export function BottomNav() {
       </footer>
 
       {/* Always-Visible App-Style Floating Bottom Navigation Bar */}
-      <div className="fixed bottom-3 sm:bottom-5 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none">
+      <div className="fixed bottom-7 sm:bottom-8 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none">
         <nav
           aria-label="App navigation"
           className="pointer-events-auto max-w-[780px] mx-auto grid grid-cols-7 items-center gap-0.5 sm:gap-1 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/92 dark:bg-zinc-950/92 backdrop-blur-xl shadow-[0_14px_38px_-10px_rgba(9,9,11,0.2)] dark:shadow-[0_14px_38px_-10px_rgba(0,0,0,0.8)] p-1 sm:p-1.5"

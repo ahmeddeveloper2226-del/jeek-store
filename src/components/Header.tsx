@@ -1,5 +1,7 @@
+// jeek-store/src/components/Header.tsx
 import { asset } from '../lib/asset';
 import { LogIn, LogOut, Moon, ShoppingBag, Sun } from 'lucide-react';
+import { DeviceSwitch } from './DeviceSwitch';
 import { STORE_LOGO } from '../data/catalog';
 import { useStore } from '../context/StoreContext';
 
@@ -22,7 +24,7 @@ export function Header() {
     <header className="w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950 transition-colors duration-200">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-4 sm:py-5 grid grid-cols-[1fr_auto_1fr] gap-3 items-start">
         {/* Top Left: English / Arabic Language Switch */}
-        <div className="flex items-center justify-start pt-2">
+        <div className="flex flex-col items-start justify-start gap-2 pt-2">
           <button
             type="button"
             onClick={toggleLanguage}
@@ -48,6 +50,7 @@ export function Header() {
               AR
             </span>
           </button>
+          <DeviceSwitch language={language} />
         </div>
 
         {/* Top Center: Store Circular Logo + "Jeek Store" directly below */}

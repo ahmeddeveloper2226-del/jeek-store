@@ -1,3 +1,4 @@
+/* jeek-store/src/index.css */
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -107,3 +108,18 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ===== Phone mode (toggled by the Computer / Phone switch) ===== */
+html.phone-mode body { max-width: 430px; margin-inline: auto; overflow-x: hidden; box-shadow: 0 0 0 1px rgba(113,113,122,.25), 0 0 40px rgba(0,0,0,.12); }
+html.phone-mode .fixed.inset-x-0 { left: 50% !important; right: auto !important; width: 100%; max-width: 430px; translate: -50% 0; }
+/* multi-column layouts collapse to one column on phone */
+html.phone-mode .grid[class*="lg:grid-cols-12"],
+html.phone-mode .grid[class*="lg:grid-cols-3"],
+html.phone-mode .grid[class*="sm:grid-cols-2"],
+html.phone-mode .grid[class*="md:grid-cols-2"] { grid-template-columns: minmax(0, 1fr) !important; }
+html.phone-mode [class*="lg:col-span"] { grid-column: 1 / -1 !important; }
+/* card grids (categories, products) sit side by side: 2 per row */
+html.phone-mode .grid.grid[class*="gap-7"],
+html.phone-mode .grid.grid[class*="lg:grid-cols-4"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .75rem !important; }
+html.phone-mode article.flex-col { flex-direction: column !important; }
+html.phone-mode [class*="lg:w-["] { width: 100% !important; }

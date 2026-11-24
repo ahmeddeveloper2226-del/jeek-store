@@ -1,10 +1,13 @@
+// jeek-store/src/pages/CategoriesPage.tsx
 import { asset } from '../lib/asset';
 import { ArrowLeft } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
+import { useDeviceMode } from '../lib/deviceMode';
 import { useStore } from '../context/StoreContext';
 import { CategoryId } from '../types';
 
 export function CategoriesPage() {
+  const phone = useDeviceMode() === 'phone';
   const { t, navigate, activeCategoryFilter, setActiveCategoryFilter, products } = useStore();
 
   const categories: {
@@ -43,7 +46,7 @@ export function CategoriesPage() {
   const items = products.filter((p) => p.category === activeCat);
 
   return (
-    <section className="max-w-[1360px] mx-auto px-4 sm:px-8 py-10 space-y-10">
+    <section className={`max-w-[1360px] mx-auto px-4 sm:px-8 ${phone ? 'py-6 space-y-6' : 'py-10 space-y-10'}`}>
       <div className="flex items-center justify-between gap-4">
         <button
           type="button"
@@ -89,10 +92,10 @@ export function CategoriesPage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5 space-y-1.5 flex-1 flex flex-col justify-between">
+              <div className={`${phone ? 'p-2.5' : 'p-5'} space-y-1.5 flex-1 flex flex-col justify-between`}>
                 <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <h2 className="font-display text-lg font-extrabold tracking-tight">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <h2 className={`font-display ${phone ? 'text-sm' : 'text-lg'} font-extrabold tracking-tight`}>
                       {cat.title}
                     </h2>
                     <span
@@ -104,7 +107,7 @@ export function CategoriesPage() {
                     </span>
                   </div>
                   <p
-                    className={`mt-1.5 text-xs leading-relaxed ${
+                    className={`mt-1.5 ${phone ? 'text-[10px] line-clamp-2' : 'text-xs'} leading-relaxed ${
                       isSelected ? 'text-zinc-300' : 'text-zinc-600 dark:text-zinc-400'
                     }`}
                   >
