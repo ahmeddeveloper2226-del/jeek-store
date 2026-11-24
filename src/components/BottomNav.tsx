@@ -51,10 +51,15 @@ export function BottomNav() {
           </div>
           <span className="font-mono-tabular">© 2026 {t('storeName')}</span>
         </div>
+        <div className="pb-2 text-center">
+          <span dir="ltr" className="font-mono-tabular text-[11px] text-zinc-500 dark:text-zinc-400">
+            developed by IntelligentEra . Ahmed Mohamed
+          </span>
+        </div>
       </footer>
 
       {/* Always-Visible App-Style Floating Bottom Navigation Bar */}
-      <div className="fixed bottom-7 sm:bottom-8 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none">
+      <div className="fixed bottom-3 sm:bottom-5 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none">
         <nav
           aria-label="App navigation"
           className="pointer-events-auto max-w-[780px] mx-auto grid grid-cols-7 items-center gap-0.5 sm:gap-1 rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 bg-white/92 dark:bg-zinc-950/92 backdrop-blur-xl shadow-[0_14px_38px_-10px_rgba(9,9,11,0.2)] dark:shadow-[0_14px_38px_-10px_rgba(0,0,0,0.8)] p-1 sm:p-1.5"
