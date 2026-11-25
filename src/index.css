@@ -123,3 +123,20 @@ html.phone-mode .grid.grid[class*="gap-7"],
 html.phone-mode .grid.grid[class*="lg:grid-cols-4"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .75rem !important; }
 html.phone-mode article.flex-col { flex-direction: column !important; }
 html.phone-mode [class*="lg:w-["] { width: 100% !important; }
+
+/* ===== Phone fit improvements ===== */
+html, body { max-width: 100%; overflow-x: clip; }
+
+/* Header: two compact rows (controls on top, logo below) whenever Phone mode is on,
+   even when the browser window itself is wide. */
+html.phone-mode header > div { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; padding-inline: 1rem !important; }
+html.phone-mode header .jeek-hdr-logo { grid-column: 1 / -1 !important; order: 3 !important; }
+html.phone-mode header > div > div:first-child { flex-direction: row !important; align-items: center !important; padding-top: 0 !important; }
+html.phone-mode header > div > div:last-child { padding-top: 0 !important; gap: .375rem !important; }
+html.phone-mode header .jeek-hdr-label { display: none !important; }
+html.phone-mode header .jeek-hdr-logo > button > div:first-child { width: 5rem; height: 5rem; }
+
+/* Bottom navigation: 7 tabs must fit inside the phone column */
+html.phone-mode nav[aria-label="App navigation"] { gap: 0 !important; padding: .25rem !important; }
+html.phone-mode nav[aria-label="App navigation"] svg { width: 18px !important; height: 18px !important; }
+html.phone-mode nav[aria-label="App navigation"] span.truncate { font-size: 9px !important; }

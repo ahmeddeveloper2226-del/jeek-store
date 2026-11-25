@@ -22,9 +22,9 @@ export function Header() {
 
   return (
     <header className="w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-950 transition-colors duration-200">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-4 sm:py-5 grid grid-cols-[1fr_auto_1fr] gap-3 items-start">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-8 py-4 sm:py-5 grid grid-cols-2 sm:grid-cols-[1fr_auto_1fr] gap-x-3 gap-y-4 items-start">
         {/* Top Left: English / Arabic Language Switch */}
-        <div className="flex flex-col items-start justify-start gap-2 pt-2">
+        <div className="flex flex-row sm:flex-col flex-wrap items-center sm:items-start justify-start gap-2 sm:pt-2 min-w-0">
           <button
             type="button"
             onClick={toggleLanguage}
@@ -54,13 +54,13 @@ export function Header() {
         </div>
 
         {/* Top Center: Store Circular Logo + "Jeek Store" directly below */}
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="jeek-hdr-logo col-span-2 sm:col-span-1 order-last sm:order-none flex flex-col items-center justify-center text-center">
           <button
             type="button"
             onClick={() => navigate('home')}
             className="group flex flex-col items-center gap-2.5 focus:outline-none cursor-pointer"
           >
-            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full p-0.5 bg-gradient-to-tr from-zinc-950 via-red-600 to-zinc-950 dark:from-white dark:via-red-500 dark:to-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+            <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-full p-0.5 bg-gradient-to-tr from-zinc-950 via-red-600 to-zinc-950 dark:from-white dark:via-red-500 dark:to-white shadow-lg group-hover:scale-105 transition-transform duration-300">
               <div className="w-full h-full rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center">
                 <img
                   src={asset(STORE_LOGO)}
@@ -77,7 +77,7 @@ export function Header() {
         </div>
 
         {/* Top Right: Cart Icon + Light/Dark Theme Switch */}
-        <div className="flex items-center justify-end gap-2 sm:gap-3 pt-1.5">
+        <div className="flex items-center justify-end gap-1.5 sm:gap-3 sm:pt-1.5 min-w-0">
           <button
             type="button"
             onClick={() => setIsCartOpen(true)}
@@ -97,10 +97,10 @@ export function Header() {
             onClick={user ? signOutUser : signInWithGoogle}
             aria-label={user ? 'Sign out' : 'Sign in with Google'}
             title={user ? user.email || '' : ''}
-            className="inline-flex items-center gap-1.5 px-3 h-10 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white text-xs font-semibold hover:border-zinc-950 dark:hover:border-zinc-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3 min-w-10 h-10 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white text-xs font-semibold hover:border-zinc-950 dark:hover:border-zinc-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             {user ? <LogOut className="w-3.5 h-3.5 text-red-600" /> : <LogIn className="w-3.5 h-3.5 text-red-600" />}
-            <span className="hidden sm:inline max-w-[110px] truncate">
+            <span className="jeek-hdr-label hidden sm:inline max-w-[110px] truncate">
               {user
                 ? (user.displayName || user.email || '').split(' ')[0]
                 : language === 'ar'
@@ -113,17 +113,17 @@ export function Header() {
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle light and dark theme"
-            className="inline-flex items-center gap-1.5 px-3 h-10 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white text-xs font-semibold hover:border-zinc-950 dark:hover:border-zinc-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            className="inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3 min-w-10 h-10 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-950 dark:text-white text-xs font-semibold hover:border-zinc-950 dark:hover:border-zinc-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
           >
             {theme === 'light' ? (
               <>
                 <Sun className="w-3.5 h-3.5 text-red-600" />
-                <span className="hidden sm:inline">{t('lightMode')}</span>
+                <span className="jeek-hdr-label hidden sm:inline">{t('lightMode')}</span>
               </>
             ) : (
               <>
                 <Moon className="w-3.5 h-3.5 text-red-500" />
-                <span className="hidden sm:inline">{t('darkMode')}</span>
+                <span className="jeek-hdr-label hidden sm:inline">{t('darkMode')}</span>
               </>
             )}
           </button>
