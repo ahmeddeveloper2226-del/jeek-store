@@ -1,13 +1,30 @@
+// jeek-store/src/pages/OrdersPage.tsx
 import { asset } from '../lib/asset';
 import { ArrowLeft, CheckCircle2, Clock, Package, RotateCw, Truck } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
 import { formatCurrency } from '../data/catalog';
-import { Order, OrderStatus } from '../types';
+import { Order, ProductOrderStatus } from '../types';
 
 export function OrdersPage() {
   const { orders, products, language, t, navigate, openProductDetail, addToCart } = useStore();
 
-  const statusMeta = (status: OrderStatus) => {
+  const statusMeta = (status: ProductOrderStatus) => {
+    if (status === 'Pending') {
+      return {
+        label: t('statusPending'),
+        icon: Clock,
+        step: 0,
+        textClass: 'text-amber-600 dark:text-amber-400',
+      };
+    }
+    if (status === 'Rejected') {
+      return {
+        label: t('statusRejected'),
+        icon: Clock,
+        step: 0,
+        textClass: 'text-red-600 dark:text-red-400',
+      };
+    }
     if (status === 'Delivered') {
       return {
         label: t('statusDelivered'),

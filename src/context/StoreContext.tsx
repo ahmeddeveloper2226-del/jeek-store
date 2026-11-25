@@ -1,3 +1,4 @@
+// jeek-store/src/context/StoreContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
   GoogleAuthProvider,
@@ -418,7 +419,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       ...(user ? { uid: user.uid } : {}),
       createdAtMs: Date.now(),
       date: new Date().toISOString().slice(0, 10),
-      status: 'Preparing',
+      status: 'Pending',
       total: cartSubtotal,
       customerName: customerName || profile.name,
       phone: phone,

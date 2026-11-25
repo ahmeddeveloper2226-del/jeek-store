@@ -154,8 +154,12 @@ export function ProductCard({ product, featured: featuredProp = false }: Product
               <span className="text-red-600 dark:text-red-400 font-semibold">
                 {language === 'ar' ? product.subCategoryAr : product.subCategory}
               </span>
-              <span className="mx-1.5">·</span>
-              <span className="font-mono-tabular">{product.weightKg} kg</span>
+              {product.weightKg > 0 && (
+                <>
+                  <span className="mx-1.5">·</span>
+                  <span className="font-mono-tabular">{product.weightKg} kg</span>
+                </>
+              )}
             </p>
             <h3
               className={`font-display font-bold tracking-tight text-zinc-950 dark:text-white leading-snug group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors ${

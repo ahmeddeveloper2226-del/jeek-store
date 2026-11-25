@@ -1,3 +1,4 @@
+// jeek-store/src/data/translations.ts
 import { Language } from '../types';
 
 export const translations = {
@@ -50,6 +51,8 @@ export const translations = {
     orderDate: 'Placed',
     orderTotal: 'Total',
     orderAddress: 'Shipping To',
+    statusPending: 'Awaiting Approval',
+    statusRejected: 'Rejected',
     statusPreparing: 'Preparing',
     statusInTransit: 'In Transit',
     statusDelivered: 'Delivered',
@@ -165,6 +168,8 @@ export const translations = {
     orderDate: 'تاريخ الطلب',
     orderTotal: 'الإجمالي',
     orderAddress: 'عنوان التوصيل',
+    statusPending: 'بانتظار الموافقة',
+    statusRejected: 'مرفوض',
     statusPreparing: 'قيد التجهيز',
     statusInTransit: 'في الطريق',
     statusDelivered: 'تم التوصيل',

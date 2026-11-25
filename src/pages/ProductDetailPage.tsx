@@ -1,3 +1,4 @@
+// jeek-store/src/pages/ProductDetailPage.tsx
 import { asset } from '../lib/asset';
 import { useEffect, useState } from 'react';
 import {
@@ -160,12 +161,14 @@ export function ProductDetailPage() {
                 {language === 'ar' ? product.elementAr : product.element}
               </span>
             </div>
-            <div>
-              <span className="text-zinc-500 dark:text-zinc-400 block">{t('specWeight')}</span>
-              <span className="font-mono-tabular font-bold text-zinc-950 dark:text-white">
-                {product.weightKg} kg
-              </span>
-            </div>
+            {product.weightKg > 0 && (
+              <div>
+                <span className="text-zinc-500 dark:text-zinc-400 block">{t('specWeight')}</span>
+                <span className="font-mono-tabular font-bold text-zinc-950 dark:text-white">
+                  {product.weightKg} kg
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Colorway Selector */}
@@ -290,24 +293,36 @@ export function ProductDetailPage() {
             {t('pdpGeometry')}
           </h2>
           <dl className="divide-y divide-zinc-200/80 dark:divide-zinc-800 text-xs">
+            {(product.details || []).map((d, i) => (
+              <div key={`${d.name}-${i}`} className="py-2.5 flex justify-between gap-4">
+                <dt className="text-zinc-500">{d.name}</dt>
+                <dd className="font-semibold text-zinc-950 dark:text-white text-end">{d.value}</dd>
+              </div>
+            ))}
+            {product.drivetrain !== 'N/A' && (
             <div className="py-2.5 flex justify-between">
               <dt className="text-zinc-500">{t('specDrivetrain')}</dt>
               <dd className="font-semibold text-zinc-950 dark:text-white text-end">
                 {language === 'ar' ? product.drivetrainAr : product.drivetrain}
               </dd>
             </div>
+            )}
+            {product.brakes !== 'N/A' && (
             <div className="py-2.5 flex justify-between">
               <dt className="text-zinc-500">{t('specBrakes')}</dt>
               <dd className="font-semibold text-zinc-950 dark:text-white text-end">
                 {language === 'ar' ? product.brakesAr : product.brakes}
               </dd>
             </div>
+            )}
+            {product.fork !== 'N/A' && (
             <div className="py-2.5 flex justify-between">
               <dt className="text-zinc-500">{t('specFork')}</dt>
               <dd className="font-semibold text-zinc-950 dark:text-white text-end">
                 {language === 'ar' ? product.forkAr : product.fork}
               </dd>
             </div>
+            )}
             {product.geometry && (
               <>
                 <div className="py-2.5 flex justify-between">

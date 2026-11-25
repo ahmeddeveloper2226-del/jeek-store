@@ -1,3 +1,4 @@
+// jeek-store/src/types.ts
 export type Language = 'en' | 'ar';
 export type Theme = 'light' | 'dark';
 
@@ -14,6 +15,11 @@ export type PageRoute =
   | 'perfect-bike-result';
 
 export type BikeType = 'mountain' | 'road' | 'hybrid' | 'kids';
+
+export interface ProductDetail {
+  name: string;
+  value: string;
+}
 
 export type CategoryId = 'bikes' | 'accessories' | 'spare-parts' | 'safety';
 
@@ -48,6 +54,7 @@ export interface Product {
   subCategory: string;
   subCategoryAr: string;
   bikeType?: BikeType;
+  details?: ProductDetail[];
   price: number;
   element: string;
   elementAr: string;
@@ -101,13 +108,15 @@ export interface OrderItemSnapshot {
   unitPrice: number;
 }
 
+export type ProductOrderStatus = OrderStatus | 'Pending' | 'Rejected';
+
 export interface Order {
   id: string;
   uid?: string;
   docId?: string;
   createdAtMs?: number;
   date: string;
-  status: OrderStatus;
+  status: ProductOrderStatus;
   total: number;
   address: string;
   customerName?: string;
