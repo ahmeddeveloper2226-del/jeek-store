@@ -4,11 +4,12 @@ import { ArrowLeft } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { useDeviceMode } from '../lib/deviceMode';
 import { useStore } from '../context/StoreContext';
-import { CategoryId } from '../types';
+import { useState } from 'react';
+import { BikeType, CategoryId } from '../types';
 
 export function CategoriesPage() {
   const phone = useDeviceMode() === 'phone';
-  const { t, navigate, activeCategoryFilter, setActiveCategoryFilter, products } = useStore();
+  const { t, language, navigate, activeCategoryFilter, setActiveCategoryFilter, products } = useStore();
 
   const categories: {
     id: CategoryId;
@@ -42,8 +43,21 @@ export function CategoriesPage() {
     },
   ];
 
+  const [bikeFilter, setBikeFilter] = useState<'all' | BikeType>('all');
+  const bikeSubcategories: { id: 'all' | BikeType; en: string; ar: string }[] = [
+    { id: 'all', en: 'All', ar: 'الكل' },
+    { id: 'mountain', en: 'Mountain Bikes', ar: 'دراجات جبلية' },
+    { id: 'road', en: 'Road Bikes', ar: 'دراجات طريق' },
+    { id: 'hybrid', en: 'Hybrid Bikes', ar: 'دراجات هجينة' },
+    { id: 'kids', en: 'Kids Bikes', ar: 'دراجات أطفال' },
+  ];
+
   const activeCat: CategoryId = activeCategoryFilter === 'all' ? 'bikes' : activeCategoryFilter;
-  const items = products.filter((p) => p.category === activeCat);
+  const items = products.filter(
+    (p) =>
+      p.category === activeCat &&
+      (activeCat !== 'bikes' || bikeFilter === 'all' || p.bikeType === bikeFilter),
+  );
 
   return (
     <section className={`max-w-[1360px] mx-auto px-4 sm:px-8 ${phone ? 'py-6 space-y-6' : 'py-10 space-y-10'}`}>
@@ -130,6 +144,28 @@ export function CategoriesPage() {
             {items.length} {t('itemsCount')}
           </span>
         </div>
+
+        {activeCat === 'bikes' && (
+          <div className="flex flex-wrap gap-2">
+            {bikeSubcategories.map((sub) => {
+              const active = bikeFilter === sub.id;
+              return (
+                <button
+                  key={sub.id}
+                  type="button"
+                  onClick={() => setBikeFilter(sub.id)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold border transition-colors cursor-pointer ${
+                    active
+                      ? 'bg-red-600 border-red-600 text-white'
+                      : 'border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-zinc-950 dark:hover:border-zinc-500'
+                  }`}
+                >
+                  {language === 'ar' ? sub.ar : sub.en}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {items.map((item) => (

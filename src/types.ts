@@ -13,6 +13,8 @@ export type PageRoute =
   | 'perfect-bike-quiz'
   | 'perfect-bike-result';
 
+export type BikeType = 'mountain' | 'road' | 'hybrid' | 'kids';
+
 export type CategoryId = 'bikes' | 'accessories' | 'spare-parts' | 'safety';
 
 export interface ProductColor {
@@ -45,6 +47,7 @@ export interface Product {
   category: CategoryId;
   subCategory: string;
   subCategoryAr: string;
+  bikeType?: BikeType;
   price: number;
   element: string;
   elementAr: string;
@@ -212,4 +215,3 @@ export interface MaintenanceServiceConfig {
   allowCustomBike: boolean;
   frameMaterials: MaintenanceOptionItem[];
 }
-

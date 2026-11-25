@@ -53,7 +53,7 @@ export function BottomNav() {
         </div>
         <div className="pb-2 text-center">
           <span dir="ltr" className="font-mono-tabular text-[11px] text-zinc-500 dark:text-zinc-400">
-            developed by IntelligentEra . Ahmed Mohamed
+            developed by IntelligentEra
           </span>
         </div>
       </footer>
