@@ -108,7 +108,7 @@ export interface OrderItemSnapshot {
   unitPrice: number;
 }
 
-export type ProductOrderStatus = OrderStatus | 'Pending' | 'Rejected';
+export type ProductOrderStatus = OrderStatus | 'Pending' | 'Rejected' | 'Cancelled';
 
 export interface Order {
   id: string;

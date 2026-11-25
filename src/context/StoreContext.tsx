@@ -13,6 +13,7 @@ import {
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { PRODUCTS } from '../data/catalog';
@@ -58,6 +59,7 @@ interface StoreContextValue {
   cartSubtotal: number;
   orders: Order[];
   placeOrder: (customerName: string, phone: string, address: string) => Order;
+  cancelOrder: (order: Order) => void;
   maintenanceOrders: MaintenanceOrder[];
   createMaintenanceRequest: (input: {
     customerName: string;
@@ -466,6 +468,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return newOrder;
   };
 
+  // Customers can only cancel while the order is still "Preparing" (enforced by Firestore rules too).
+  const cancelOrder = (order: Order) => {
+    if (order.status !== 'Preparing') return;
+    if (db && order.docId && !order.docId.startsWith('local-')) {
+      updateDoc(doc(db, 'orders', order.docId), { status: 'Cancelled' }).catch(
+        (err: { code?: string }) => {
+          console.error('Cancel failed:', err);
+          window.alert(
+            (language === 'ar'
+              ? 'تعذر إلغاء الطلب. ربما تم تحديث حالته بالفعل.'
+              : 'Could not cancel this order. Its status may have just changed.') +
+              (err?.code ? ` (${err.code})` : ''),
+          );
+        },
+      );
+    } else {
+      setGuestOrders((prev) =>
+        prev.map((o) => (o.id === order.id ? { ...o, status: 'Cancelled' } : o)),
+      );
+    }
+  };
+
   const createMaintenanceRequest = (input: {
     customerName: string;
     phone: string;
@@ -642,6 +666,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         cartSubtotal,
         orders,
         placeOrder,
+        cancelOrder,
         maintenanceOrders,
         createMaintenanceRequest,
         maintenanceConfig,

@@ -6,7 +6,7 @@ import { formatCurrency } from '../data/catalog';
 import { Order, ProductOrderStatus } from '../types';
 
 export function OrdersPage() {
-  const { orders, products, language, t, navigate, openProductDetail, addToCart } = useStore();
+  const { orders, products, language, t, navigate, openProductDetail, addToCart, cancelOrder } = useStore();
 
   const statusMeta = (status: ProductOrderStatus) => {
     if (status === 'Pending') {
@@ -15,6 +15,14 @@ export function OrdersPage() {
         icon: Clock,
         step: 0,
         textClass: 'text-amber-600 dark:text-amber-400',
+      };
+    }
+    if (status === 'Cancelled') {
+      return {
+        label: t('statusCancelled'),
+        icon: Clock,
+        step: 0,
+        textClass: 'text-red-600 dark:text-red-400',
       };
     }
     if (status === 'Rejected') {
@@ -136,6 +144,22 @@ export function OrdersPage() {
                       <RotateCw className="w-3 h-3" />
                       <span>{language === 'ar' ? 'إعادة الطلب' : 'Reorder'}</span>
                     </button>
+                    {order.status === 'Preparing' && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const ok = window.confirm(
+                            language === 'ar'
+                              ? `هل تريد إلغاء الطلب #${order.id}؟`
+                              : `Cancel order #${order.id}?`,
+                          );
+                          if (ok) cancelOrder(order);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-600 text-xs font-bold text-red-600 hover:bg-red-600 hover:text-white transition-colors cursor-pointer"
+                      >
+                        <span>{language === 'ar' ? 'إلغاء الطلب' : 'Cancel Order'}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
 
