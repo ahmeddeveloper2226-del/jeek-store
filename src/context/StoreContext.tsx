@@ -447,12 +447,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
     if (orderRef) {
       setMyOrderIds((prev) => [docId, ...prev]);
-      setDoc(orderRef, newOrder).catch(() => {
+      setDoc(orderRef, newOrder).catch((err: { code?: string; message?: string }) => {
+        console.error('Order failed:', err);
         setMyOrderIds((prev) => prev.filter((x) => x !== docId));
+        const code = err?.code ? ` (${err.code})` : '';
         window.alert(
-          language === 'ar'
+          (language === 'ar'
             ? 'تعذر إرسال الطلب. يرجى التحقق من الاتصال والمحاولة مرة أخرى.'
-            : 'We could not send your order. Please check your connection and try again.',
+            : 'We could not send your order. Please check your connection and try again.') + code,
         );
       });
     } else {
