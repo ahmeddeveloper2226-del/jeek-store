@@ -96,12 +96,12 @@ export function IntroSplash() {
                 transition={{ duration: 0.78, ease: [0.16, 1, 0.3, 1] }}
                 className="relative w-44 h-44 sm:w-64 sm:h-64 rounded-full p-1 bg-gradient-to-tr from-zinc-950 via-red-600 to-zinc-950 dark:from-white dark:via-red-500 dark:to-white shadow-[0_28px_72px_-16px_rgba(220,38,38,0.4)]"
               >
-                <div className="w-full h-full rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center">
+                <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
                   <img
                     src={asset(STORE_LOGO)}
                     alt="Jeek Store"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain p-1"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               </motion.div>

@@ -41,7 +41,7 @@ export function BottomNav() {
               src={asset(STORE_LOGO)}
               alt="Jeek Store"
               referrerPolicy="no-referrer"
-              className="w-6 h-6 rounded-full bg-zinc-950 object-contain p-0.5 border border-zinc-300 dark:border-zinc-700"
+              className="w-6 h-6 rounded-full bg-white object-cover border border-zinc-300 dark:border-zinc-700"
             />
             <span className="font-semibold text-zinc-900 dark:text-zinc-200">
               {t('storeName')}

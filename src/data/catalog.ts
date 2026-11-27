@@ -1,6 +1,6 @@
 import { Language, Order, Product, QuizAnswers } from '../types';
 
-export const STORE_LOGO = '/assets/aistudio/jeekstore1-removebg-preview.png';
+export const STORE_LOGO = '/assets/aistudio/jeek-store-logo.png';
 
 export function formatCurrency(amount: number, language: Language): string {
   return language === 'ar'

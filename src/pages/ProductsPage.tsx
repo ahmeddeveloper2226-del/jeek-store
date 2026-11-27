@@ -6,6 +6,7 @@ import { formatCurrency } from '../data/catalog';
 import { useStore } from '../context/StoreContext';
 
 type MaterialFilter = 'all' | 'carbon' | 'aluminum' | 'chromoly' | 'iron';
+type CategoryFilter = 'all' | 'bikes' | 'accessories' | 'spare-parts' | 'safety';
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'weight-asc';
 
 export function ProductsPage() {
@@ -13,12 +14,15 @@ export function ProductsPage() {
   const [search, setSearch] = useState('');
   const [material, setMaterial] = useState<MaterialFilter>('all');
   const [maxPrice, setMaxPrice] = useState(2600);
+  const [category, setCategory] = useState<CategoryFilter>('all');
+  const [seed] = useState(() => Math.random());
   const [sort, setSort] = useState<SortOption>('featured');
 
   const bikes = useMemo(() => {
-    const base = products.filter((p) => p.category === 'bikes');
+    const shuffled = [...products].map((p) => ({ p, r: Math.random() + seed * 0 })).sort((a, b) => a.r - b.r).map((x) => x.p);
+    const base = shuffled.filter((p) => category === 'all' || p.category === category);
     const filtered = base.filter((b) => {
-      const matchesMaterial = material === 'all' || b.elementKey === material;
+      const matchesMaterial = material === 'all' || (b.category === 'bikes' && b.elementKey === material);
       const matchesPrice = b.price <= maxPrice;
       const q = search.trim().toLowerCase();
       const matchesQuery =
@@ -34,7 +38,15 @@ export function ProductsPage() {
     if (sort === 'price-desc') return [...filtered].sort((a, b) => b.price - a.price);
     if (sort === 'weight-asc') return [...filtered].sort((a, b) => a.weightKg - b.weightKg);
     return filtered;
-  }, [products, material, maxPrice, search, sort]);
+  }, [products, material, maxPrice, search, sort, category, seed]);
+
+  const categoryTabs: { key: CategoryFilter; label: string; labelAr: string }[] = [
+    { key: 'all', label: 'All', labelAr: 'الكل' },
+    { key: 'bikes', label: 'Bikes', labelAr: 'دراجات' },
+    { key: 'accessories', label: 'Accessories', labelAr: 'إكسسوارات' },
+    { key: 'spare-parts', label: 'Spare Parts', labelAr: 'قطع غيار' },
+    { key: 'safety', label: 'Safety Equipment', labelAr: 'معدات الأمان' },
+  ];
 
   const materialTabs: { key: MaterialFilter; label: string; labelAr: string }[] = [
     { key: 'all', label: t('allMaterials'), labelAr: t('allMaterials') },
@@ -91,6 +103,23 @@ export function ProductsPage() {
 
       {/* Filter & Price Slider Toolbar */}
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 p-4 rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xs">
+        <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
+          {categoryTabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setCategory(tab.key)}
+              className={`px-3.5 py-2 rounded-lg text-xs font-bold border transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                category === tab.key
+                  ? 'bg-red-600 text-white border-red-600'
+                  : 'bg-zinc-50 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-800 hover:border-red-600'
+              }`}
+            >
+              {language === 'ar' ? tab.labelAr : tab.label}
+            </button>
+          ))}
+        </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {materialTabs.map((tab) => (
             <button
@@ -106,6 +135,7 @@ export function ProductsPage() {
               {language === 'ar' ? tab.labelAr : tab.label}
             </button>
           ))}
+        </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">

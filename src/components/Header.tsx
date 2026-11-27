@@ -61,12 +61,12 @@ export function Header() {
             className="group flex flex-col items-center gap-2.5 focus:outline-none cursor-pointer"
           >
             <div className="w-20 h-20 sm:w-32 sm:h-32 rounded-full p-0.5 bg-gradient-to-tr from-zinc-950 via-red-600 to-zinc-950 dark:from-white dark:via-red-500 dark:to-white shadow-lg group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full rounded-full overflow-hidden bg-zinc-950 flex items-center justify-center">
+              <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
                 <img
                   src={asset(STORE_LOGO)}
                   alt="Jeek Store Logo"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain p-0.5"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
